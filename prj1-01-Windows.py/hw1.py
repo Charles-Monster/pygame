@@ -26,15 +26,15 @@ while True:
             print('click')
             print(pygame.mouse.get_pos())
     if event.type==pygame.MOUSEBUTTONDOWN:
-        pygame.draw.circle(bg,(255,255,255),(200,100),30,0)
-        pygame.draw.circle(bg,(255,255,255),(400,100),30,0)
-        pygame.draw.line(bg,(255,255,255),(280,220),(320,220))
         pygame.draw.line(bg, (255, 0, 255), (200,100), (230, 100), 3)
         pygame.draw.line(bg, (255, 0, 255), (400,100), (430, 100), 3)
+        pygame.draw.circle(bg,(255,255,255),(200,100),30,0)
+        pygame.draw.circle(bg,(255,255,255),(400,100),30,0)
         pygame.draw.rect(bg,(0,255,0),[270,130,60,40],5)
         pygame.draw.ellipse(bg,(255,0,0),[130,160,60,35],5)  
         pygame.draw.ellipse(bg,(255,0,0),[400,160,60,35],5)
         pygame.draw.arc(bg, (255, 10, 0), [250, 219, 100, 50], math.radians(180), math.radians(0), 2)
+        pygame.draw.line(bg,(255,255,255),(280,220),(320,220))
 
 
     
