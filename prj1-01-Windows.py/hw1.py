@@ -2,6 +2,14 @@
 import pygame
 import sys
 import math
+###################定義函式###################
+def check_click(pos,x_min,y_min,x_max,y_max):
+    x_match=x_min<pos[0]<x_max
+    y_match=y_min<pos[1]<y_max
+    if x_match and y_match:
+        return True
+    else:
+        return False
 ###################初始化###################
 pygame.init() #啟動pygame
 width=640 #設定視窗寬度
@@ -11,21 +19,35 @@ height=320 #設定視窗高度
 screen= pygame.display.set_mode((width,height))
 #設定視窗標題
 pygame.display.set_caption('My Game')
+
 ###################建立畫布###################
 #建立畫布
 bg=pygame.Surface((width,height))
 #畫布為白色(R,G,B)
 bg.fill((255,255,255))
+###################設定文字###################
+typeface=pygame.font.get_default_font()
+font=pygame.font.Font(typeface,24)
+title=font.render('START',True,(0,0,0))
+screen.blit(title,(0,0))
+tit_w=title.get_width()
+tit_h=title.get_height()
 ###################循環偵測###################
+paint=False
 while True:
+    screen.blit(bg,(0,0))
+    mouse_pos= pygame.mouse.get_pos()
+    print(mouse_pos)
     for event in pygame.event.get():
         #使用者按關按鈕
         if event.type==pygame.QUIT:#如果按下[X]就退出
             sys.exit()#離開遊戲
         if event.type==pygame.MOUSEBUTTONDOWN:
+            if check_click(mouse_pos,0,0,tit_w,tit_h):
+                paint = not paint
             print('click')
             print(pygame.mouse.get_pos())
-    if event.type==pygame.MOUSEBUTTONDOWN:
+    if paint:
         pygame.draw.line(bg,(255,255,255),(280,220),(320,220))
         pygame.draw.circle(bg,(255,255,255),(200,100),30,0)
         pygame.draw.circle(bg,(255,255,255),(400,100),30,0)
@@ -45,6 +67,8 @@ while True:
         pygame.draw.ellipse(bg,(255,0,0),[130,160,60,35],5)  
         pygame.draw.ellipse(bg,(255,0,0),[400,160,60,35],5)
         pygame.draw.arc(bg, (255, 255, 255), [250, 219, 100, 50], math.radians(180), math.radians(0), 2)
+        bg.blit(title,(0,0))
+    pygame.display.update
 
 
     
