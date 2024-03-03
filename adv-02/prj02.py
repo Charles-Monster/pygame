@@ -13,15 +13,16 @@ def check_click(pos,x_min,y_min,x_max,y_max):
         return False
 ###################初始化###################
 pygame.init() #啟動pygame
-width=640 #設定視窗寬度
-height=400 #設定視窗高度
+width=602 #設定視窗寬度
+height=600 #設定視窗高度
 os.chdir(sys.path[0])
-bg_img='snow.jpg'
+bg_img='灌籃高手.png'
 bg=pygame.image.load(bg_img)
 bg_x=bg.get_width()
 bg_y=bg.get_height()
 WHITE=(255,255,255)
 BLACK=(0,0,0)
+RED=(255, 10, 0)
 
 ###################建立視窗及物件###################
 #設定視窗大小
@@ -29,7 +30,7 @@ screen= pygame.display.set_mode((width,height))
 #設定視窗標題
 pygame.display.set_caption('My Game')
 screen=pygame.display.set_mode((bg_x,bg_y))
-pygame.display.set_caption('SNOW')
+pygame.display.set_caption('灌籃高手')
 
 ###################建立畫布###################
 #建立畫布
@@ -37,7 +38,7 @@ pygame.display.set_caption('SNOW')
 # #畫布為白色(R,G,B)
 # bg.fill((255,255,255))
 ####################撥放音樂######################
-mp3_path='snow-dream.mp3'
+mp3_path='692049742.mp3'
 pygame.mixer.music.load(mp3_path)
 pygame.mixer.music.play()
 pygame.mixer.music.pause()
@@ -46,7 +47,7 @@ pygame.mixer.music.fadeout(3020000)
 ###################設定文字###################
 typeface=pygame.font.get_default_font()
 font=pygame.font.Font(typeface,24)
-title=font.render('START',True,(0,0,0))
+title=font.render('START',True,(255,255,255))
 screen.blit(title,(0,0))
 tit_w=title.get_width()
 tit_h=title.get_height()
@@ -67,9 +68,10 @@ while True:
             if check_click(mouse_pos,0,0,tit_w,tit_h):
                 paint = not paint
     if paint:
-        title=font.render('START',True,BLACK)
+        title=font.render('STOP',True,RED)
+        pygame.mixer.music.play()
     else:
-        title=font.render('STOP',True,BLACK)
+        title=font.render('START',True,RED)
     screen.blit(bg,(0,0))
     screen.blit(title,(0,0))
     pygame.display.update()
