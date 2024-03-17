@@ -30,7 +30,6 @@ def check_click(pos,x_min,y_min,x_max,y_max):
 def snow_fall():
     global x_site,y_site,x_shift,radius
     for snow in snow_list:
-
         pygame.draw.circle(screen,WHITE,(snow['x_site'],snow['y_site']),snow['radius'])
 
         snow['x_site']+=snow['x_shift']
@@ -69,10 +68,10 @@ tit_w=title.get_width()
 tit_h=title.get_height()
 ####################設定雪花基本參數######################
 snow_list=[]
-for i in range(150):
+for i in range(1500):
     x_site= random.randrange(0,bg_x)
-    y_site= random.randrange(-bg_y,-1)
-    x_shift=random.randint(-1,1)
+    y_site= random.randrange(-bg_y,-10)
+    x_shift=random.randint(-10,1)
     radius=random.randint(4,6)
 
     snow_list.append({'x_site':x_site,'y_site':y_site,'x_shift':x_shift,'radius':radius})
@@ -82,7 +81,7 @@ clock=pygame.time.Clock()
 paint=False
 cnt=0
 while True:
-    clock.tick(20)
+    clock.tick(100)
     mouse_pos= pygame.mouse.get_pos()
     for event in pygame.event.get():
         #使用者按關按鈕
