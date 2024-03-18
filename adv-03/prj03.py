@@ -7,10 +7,10 @@ import os
 
 ###################初始化###################
 pygame.init() #啟動pygame
-width=480 #設定視窗寬度
-height=360 #設定視窗高度
+width=640#設定視窗寬度
+height=600 #設定視窗高度
 os.chdir(sys.path[0])
-bg_img='a.jpg'
+bg_img='d.jpg'
 bg=pygame.image.load(bg_img)
 bg_x=bg.get_width()
 bg_y=bg.get_height()
@@ -52,7 +52,7 @@ pygame.display.set_caption('火影忍者')
 # #畫布為白色(R,G,B)
 # bg.fill((255,255,255))
 ####################撥放音樂######################
-mp3_path='青鳥.mp3'
+mp3_path='b.mp3'
 pygame.mixer.music.load(mp3_path)
 pygame.mixer.music.play()
 pygame.mixer.music.pause()
@@ -72,7 +72,7 @@ for i in range(1500):
     x_site= random.randrange(0,bg_x)
     y_site= random.randrange(-bg_y,-10)
     x_shift=random.randint(-10,1)
-    radius=random.randint(4,6)
+    radius=random.randint(3,4)
 
     snow_list.append({'x_site':x_site,'y_site':y_site,'x_shift':x_shift,'radius':radius})
 ####################新增fps######################
