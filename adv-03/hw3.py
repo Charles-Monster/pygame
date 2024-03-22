@@ -44,7 +44,7 @@ screen= pygame.display.set_mode((width,height))
 #設定視窗標題
 pygame.display.set_caption('My Game')
 screen=pygame.display.set_mode((bg_x,bg_y))
-pygame.display.set_caption('火影忍者')
+pygame.display.set_caption('BLOX FRUITS')
 
 ###################建立畫布###################
 #建立畫布
