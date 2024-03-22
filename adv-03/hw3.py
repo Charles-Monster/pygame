@@ -7,10 +7,10 @@ import os
 
 ###################初始化###################
 pygame.init() #啟動pygame
-width=603#設定視窗寬度
-height=410 #設定視窗高度
+width=738#設定視窗寬度
+height=320 #設定視窗高度
 os.chdir(sys.path[0])
-bg_img='e.webp'
+bg_img='bf.webp'
 bg=pygame.image.load(bg_img)
 bg_x=bg.get_width()
 bg_y=bg.get_height()
@@ -52,7 +52,7 @@ pygame.display.set_caption('火影忍者')
 # #畫布為白色(R,G,B)
 # bg.fill((255,255,255))
 ####################撥放音樂######################
-mp3_path='青鳥.mp3'
+mp3_path='q.mp3'
 pygame.mixer.music.load(mp3_path)
 pygame.mixer.music.play()
 pygame.mixer.music.pause()
