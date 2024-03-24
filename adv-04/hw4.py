@@ -12,7 +12,7 @@ def gophers_update():
         tick=0
     else:
         tick+=1
-    pygame.draw.circle(screen,blue,pos,50)
+    screen.blit(gopher,(pos[0]-gopher.get_width()/2,pos[1]-gopher.get_height()/2))
 def score_update():
     score_sur=score_font.render(str(score),False,red)
     screen.blit(score_sur,(10,10))
@@ -51,6 +51,7 @@ pos6 = [[195,200],[400,305],[610,305],[195,450],[400,450],[610,450]]
 
 # pos6 = [[200,200],[300,200],[400,200],[200,300],[300,300],[400,300]]
 pos = pos6[0] # 外圍記錄圓的位子
+gopher = pygame.image.load("s.png") # 地鼠圖片
 gophers=pygame.image.load('u.png')
 ######################分數物件######################
 score=0
@@ -71,6 +72,7 @@ while True:
                 score+=1
                 
     screen.blit(bg,(0,0))
+
     gophers_update()
     score_update()
     pygame.display.update()
