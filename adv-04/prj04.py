@@ -28,12 +28,13 @@ def check_click(pos,x_min,y_min,x_max,y_max):
 os.chdir(sys.path[0])
 pygame.init()
 blue = (0,0,255)
+white=(255,255,255)
 black = (0,0,0)
 red = (255,0,0)
 clock = pygame.time.Clock()
 tick = 0
 max_tick = 20
-bg_img='a.png'
+bg_img='u.png'
 bg=pygame.image.load(bg_img)
 bg_x=bg.get_width()
 bg_y=bg.get_height()
@@ -45,13 +46,13 @@ screen = pygame.display.set_mode([bg_x,bg_y])
 pygame.display.set_caption("打地鼠")
 ######################背景物件######################
 bg = pygame.Surface([bg_x,bg_y])
-bg.fill(black) # 將背景填滿黑色
+bg.fill(white) # 將背景填滿黑色
 ######################地鼠物件######################
-pos6 = [[195,200],[400,305],[610,305],[195,450],[400,450],[610,450]]
+# pos6 = [[195,200],[400,305],[610,305],[195,450],[400,450],[610,450]]
 
-# pos6 = [[200,200],[300,200],[400,200],[200,300],[300,300],[400,300]]
+pos6 = [[200,200],[300,200],[400,200],[200,300],[300,300],[400,300]]
 pos = pos6[0] # 外圍記錄圓的位子
-gophers=pygame.image.load('a.png')
+gophers=pygame.image.load('u.png')
 ######################分數物件######################
 score=0
 typeface=pygame.font.get_default_font()
