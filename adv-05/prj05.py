@@ -4,12 +4,25 @@ import sys
 import os
 import random
 ####################定義函式######################
+def mouse_update():
+    global hammer,hammer_tick
+    if hammer==ham1:
+        if hammer_tick>hammer_max_tick:
+            hammer=ham2
+            hammer_tick=0
+        else:
+            hammer_tick+=1
+    screen.blit(hammer,(mouse_pos[0]-15,mouse_pos[1]-15))
 def gophers_update():
-    global tick,pos,score
+    global tick,pos,score,times
     if tick>max_tick:
         new_pos=random.randint(0,5)
         pos=pos6[new_pos]
         tick=0
+        times+=1
+    elif score>20:
+        game_over()
+        pygame.display.update()
     else:
         tick+=1
     screen.blit(gopher,(pos[0]-gopher.get_width()/2,pos[1]-gopher.get_height()/2))
@@ -23,6 +36,14 @@ def check_click(pos,x_min,y_min,x_max,y_max):
         return True
     else:
         return False
+def times_update():
+    times_sur=times_font.render(str(times),True,red)
+    screen.blit(times_sur,(bg_x-times_sur.get_width()-10,10))
+    
+def game_over():
+    screen.fill(black)
+    end_sur=score_font.render(f'game over your score is:{score}',False,red)
+    screen.blit(end_sur,(bg_x/2-end_sur.get_width()/2,bg_y/2-end_sur.get_height()/2))
 ####################初始化######################
 os.chdir(sys.path[0])
 pygame.init()
@@ -45,6 +66,13 @@ screen = pygame.display.set_mode([bg_x,bg_y])
 pygame.display.set_caption("打地鼠")
 ######################背景物件######################
 # 將背景填滿黑色
+######################次數物件######################
+times=0
+times_max=5
+typeface=pygame.font.get_default_font()
+times_font=pygame.font.Font(typeface,24)
+
+
 ######################地鼠物件######################
 pos6 = [[195,305],[400,305],[610,305],[195,450],[400,450],[610,450]]
 
@@ -57,7 +85,12 @@ score=0
 typeface=pygame.font.get_default_font()
 score_font=pygame.font.Font(typeface,24)
 ######################滑鼠物件######################
-
+pygame.mouse.set_visible(False)
+# ham1=pygame.image.load('Hammer1.png')
+# ham2=pygame.image.load('Hammer2.png')
+# hammer=ham2
+# hammer_tick=0
+# hammer_max_tick=5
 ######################循環偵測######################
 while True:
     clock.tick(30)
@@ -69,9 +102,23 @@ while True:
             if check_click(mouse_pos,pos[0]-50,pos[1]-50,pos[0]+50,pos[1]+50):
                 tick=max_tick+1
                 score+=1
-                
-    screen.blit(bg,(0,0))
-
-    gophers_update()
-    score_update()
+    if times>=times_max:
+        game_over()
+    else:
+        screen.blit(bg,(0,0))
+        gophers_update()
+        pygame.draw.circle(screen,red,mouse_pos,10)
+        score_update()
+        print(f"{times}")
+        times_update()
     pygame.display.update()
+
+
+
+
+
+
+
+
+
+
