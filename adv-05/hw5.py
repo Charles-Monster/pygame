@@ -111,6 +111,7 @@ while True:
                 gopher3=random.randint(1,2)
                 # pos6 = [[200,200],[300,200],[400,200],[200,300],[300,300],[400,300]]
                 pos = pos6[0] # 外圍記錄圓的位子
+                
                 gophers=pygame.image.load('u.png')
             hammer=ham1#new
             if check_click(mouse_pos,pos[0]-50,pos[1]-50,pos[0]+50,pos[1]+50)and gopher3==1:

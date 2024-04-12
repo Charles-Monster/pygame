@@ -130,13 +130,3 @@ while True:
         times_update()
         mouse_update()#new
     pygame.display.update()
-
-
-
-
-
-
-
-
-
-
