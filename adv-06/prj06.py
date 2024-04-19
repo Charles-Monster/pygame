@@ -85,7 +85,7 @@ times_max=5#地鼠出現最大次數
 typeface=pygame.font.get_default_font()
 times_font=pygame.font.Font(typeface,24)
 ######################聲音物件######################
-pygame.mixer.music.load('hit.mp3')
+# pygame.mixer.music.load('hit.mp3')
 ######################地鼠物件######################
 pos6 = [[195,305],[400,305],[610,305],[195,450],[400,450],[610,450]]
 # pos6 = [[200,200],[300,200],[400,200],[200,300],[300,300],[400,300]]
@@ -106,7 +106,7 @@ ham1 = pygame.image.load("Hammer1.png")  # 鎚子圖片
 ham2 = pygame.image.load("Hammer2.png")  # 鎚子圖片
 hammer = ham2  # 設定目前要顯示的鎚子圖片
 hammer_tick= {'tick':0} # 計數器目前值
-hammer_max_tick = 5 # 設定計數器最大值
+hammer_max_tick = 999999999999 # 設定計數器最大值
 ######################循環偵測######################
 while True:
     clock.tick(30)
@@ -120,7 +120,7 @@ while True:
                 tick['tick']=max_tick+1
                 score+=1
                 hitsur=gophers2
-                pygame.mixer.music.play()
+                # pygame.mixer.music.play()
     if times>=times_max:
         game_over()
     else:
