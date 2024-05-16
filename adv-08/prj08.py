@@ -40,7 +40,7 @@ jumpvalue=0
 ds_center_x=ds_x+img_dinosaur[0].get_width()/2
 ds_center_y=ds_y+img_dinosaur[0].get_height()/2
 ds_detect_r=min(img_dinosaur[0].get_width(),img_dinosaur[0].get_height())/2
-jumpheight=13
+jumpheight=15
 #####################仙人掌物件#######################
 catci_x = bg_x-100
 catci_y=LIMIT_LOW

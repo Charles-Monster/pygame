@@ -42,25 +42,23 @@ jumpvalue=0
 ds_center_x=ds_x+img_dinosaur[0].get_width()/2
 ds_center_y=ds_y+img_dinosaur[0].get_height()/2
 ds_detect_r=min(img_dinosaur[0].get_width(),img_dinosaur[0].get_height())/2
-jumpheight=13
-#####################翼龍物件#######################
-ptera_x = bg_x-100
-ptera_y=PTERA_LIMIT_LOW
-
-ptera_shift = 10 # 仙人掌移動量
-# 障礙物中心x位置
-ptera_center_x = ptera_x + img_ptera[0].get_width() / 2
- # 障礙物中心y位置
-ptera_center_y = ptera_y + img_ptera[0].get_height() / 2
- # 障礙物偵測半徑
-ptera_detect_r = max(img_ptera[0].get_width(), img_ptera[0].get_height()) / 2 - 15
+jumpheight=16
+######################翼龍物件######################
+ptera_x = bg_x - 100 # 障礙物x位置
+ptera_y = PTERA_LIMIT_LOW # 障礙物y位置
+ptera_index = 0 # 翼龍圖片編號
+ptera_shift = 10 # 翼龍移動量
+ptera_center_x = ptera_x + img_ptera[0].get_width() / 2 # 翼龍中心x位置
+ptera_center_y = ptera_y + img_ptera[0].get_height() / 2 # 翼龍中心y位置
+# 翼龍偵測半徑
+ptera_detect_r = max(img_ptera[0].get_width(), img_ptera[0].get_height()) / 2 - 10
 #####################遊戲結束物件#######################
 gg=False
 gg_w=img_gg.get_width()
 gg_h=img_gg.get_height()
 ######################建立視窗######################
 screen=pygame.display.set_mode([bg_x,bg_y])
-pygame.display.set_caption('Dinosaur')
+pygame.display.set_caption('THE DINO GAME')
 ######################定義函式######################
 def bg_update():
     global bg_roll_x
@@ -83,15 +81,17 @@ def move_dinosaur():
     ds_center_x=ds_x+img_dinosaur[ds_index].get_width()/2
     ds_center_y=ds_y+img_dinosaur[ds_index].get_height()/2
     screen.blit(img_dinosaur[ds_index],(ds_x,ds_y))
-# def move_cacti():
-#     """移動仙人掌"""
-#     global catci_x,score
-#     catci_x=(catci_x-cacti_shift)%(bg_x-100)
-#     cacti_center_x = catci_x + img_cati.get_width() / 2 # 仙人掌中心x位置
-#     cacti_center_y = catci_y + img_cati.get_height() / 2 # 仙人掌中心y位置
-#     screen.blit(img_cati,(catci_x,catci_y))
-#     if catci_x <= 0:
-#         score +=1
+def move_ptera():
+    """移動翼龍"""
+    global ptera_x, ptera_index, score, ptera_center_x, ptera_center_y
+
+    ptera_x = (ptera_x - ptera_shift) % (bg_x - 100)  # 翼龍移動
+    ptera_index = (ptera_index - 1) % len(img_ptera)
+    ptera_center_x = ptera_x + img_ptera[ptera_index].get_width() / 2
+    ptera_center_y = ptera_y + img_ptera[ptera_index].get_height() / 2
+    screen.blit(img_ptera[ptera_index], (ptera_x, ptera_y))
+    if ptera_x <= 0:
+        score += 1
 def score_update():
     score_sur=score_font.render(str(score),True,RED)
     screen.blit(score_sur,[10,10])
@@ -114,7 +114,7 @@ while True:
             if event.key==K_RETURN and gg:
                 score=0
                 gg=False
-                # catci_x-bg_x-100
+                ptera_x-bg_x-100
                 ds_y=LIMIT_LOW
                 jumpstate=False
     if gg:
@@ -123,10 +123,10 @@ while True:
         bg_update()
         move_dinosaur()
         score_update()
-    #     move_cacti()
-    #     gg=is_hit(ds_center_x,ds_center_y,cacti_center_x,cacti_center_y,cacti_detect_r)
-    #     pygame.draw.circle(screen, RED, (int(catci_x), int(catci_y)), cacti_detect_r + ds_detect_r, 1)
-    # if is_hit(ds_center_x, ds_center_y, catci_x, catci_y, cacti_detect_r + ds_detect_r ):
+        move_ptera()
+        gg=is_hit(ds_center_x,ds_center_y,ptera_center_x,ptera_center_y,ptera_detect_r)
+        pygame.draw.circle(screen, RED, (int(ptera_x), int(ptera_y)), ptera_detect_r + ds_detect_r, 1)
+    if is_hit(ds_center_x, ds_center_y, ptera_x, ptera_y, ptera_detect_r + ds_detect_r ):
         print("hit!!!")
     # 畫出碰撞偵測範圍
     pygame.display.update()
