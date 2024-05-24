@@ -234,7 +234,7 @@ def move_ptera():
     ptera_center_y = ptera_y + img_ptera[ptera_index].get_height() / 2
     screen.blit(img_ptera[ptera_index], (ptera_x, ptera_y))
     if ptera_x <= 0:
-        score += 10000
+        score += 1
         enemy_random=random.randint(0,1)
 ####################初始化######################
 os.chdir(sys.path[0])
