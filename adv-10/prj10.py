@@ -243,7 +243,7 @@ LIMIT_LOW = 140  # 地面高度
 PTERA_LIMIT_LOW = 110  # 翼龍高度
 clock = pygame.time.Clock()
 RED = (255, 0, 0)  # 紅色
-enemy_random=0
+enemy_random=random.randint(0,1)
 ####################載入圖片物件######################
 img = pygame.image.load("image/bg.png")  # 加載背景
 img_dinosaur = [  # 加載恐龍
@@ -278,25 +278,59 @@ ds_detect_r = min(img_dinosaur[0].get_width(), img_dinosaur[0].get_height()) / 2
 ds_show=img_dinosaur
 bend_down=False
 fast_descend=False
+######################障礙物物件######################
+class Obstacle:
+    def __init__(self, x, y, img: list[pygame.Surface], shift):
+        self.x = x
+        self.y = y
+        self.img = img
+        self.shift = shift
+        self.center_x = x + img[0].get_width() / 2
+        self.center_y = y + img[0].get_height() / 2
+        self.detect_r = max(img[0].get_width(), img[0].get_height()) / 2
+        self.index = 0
+    def initial(self):
+        self.x = bg_x - 100
+        self.center_x = self.x + self.img[0].get_width() / 2
+        self.center_y = self.y + self.img[0].get_height() / 2
+        self.index = 0
+    def move(self):
+        self.x = (self.x - self.shift) % (bg_x - 100)
+        self.index = (self.index - 1) % len(self.img)
+        self.center_x = self.x + self.img[self.index].get_width() / 2
+        self.center_y = self.y + self.img[self.index].get_height() / 2
+        screen.blit(self.img[self.index], (self.x, self.y))
+class Cacti(Obstacle):
+        def __init__(self, x: int, y: int, img: list[pygame.Surface], shift: int):
+            """初始化障礙物, x: x位置, y: y位置, img: 圖片, shift: 移動量"""
+            super().__init__(x, y, img, shift)
+            self.detect_r = self.detect_r - 15
+class Ptera(Obstacle):
+        def __init__(self, x: int, y: int, img: list, shift: int):
+            """初始化障礙物, x: x位置, y: y位置, img: 圖片, shift: 移動量"""
+            super().__init__(x, y, img, shift)
+            self.detect_r = self.detect_r - 10
 ######################仙人掌物件######################
-cacti_x = bg_x - 100  # 障礙物x位置
-cacti_y = LIMIT_LOW  # 障礙物y位置
-cacti_shift = 10  # 仙人掌移動量
-cacti_center_x = cacti_x + img_cacti.get_width() / 2  # 障礙物中心x位置
-cacti_center_y = cacti_y + img_cacti.get_height() / 2  # 障礙物中心y位置
-cacti_detect_r = max(img_cacti.get_width(), img_cacti.get_height()) / 2 - 15  # 障礙物偵測半徑
+# cacti_x = bg_x - 100  # 障礙物x位置
+# cacti_y = LIMIT_LOW  # 障礙物y位置
+# cacti_shift = 10  # 仙人掌移動量
+# cacti_center_x = cacti_x + img_cacti.get_width() / 2  # 障礙物中心x位置
+# cacti_center_y = cacti_y + img_cacti.get_height() / 2  # 障礙物中心y位置
+# cacti_detect_r = max(img_cacti.get_width(), img_cacti.get_height()) / 2 - 15  # 障礙物偵測半徑
+cacti = Cacti(bg_x - 100, LIMIT_LOW, [img_cacti], 10)
 ######################遊戲結束物件######################
 gg = False  # 遊戲結束
 gg_w = img_gg.get_width()  # 遊戲結束圖片寬度
 gg_h = img_gg.get_height()  # 遊戲結束圖片高度
 ######################翼龍物件######################
-ptera_x = bg_x - 100  # 障礙物x位置
-ptera_y = PTERA_LIMIT_LOW  # 障礙物y位置
-ptera_index = 0  # 翼龍圖片編號
-ptera_shift = 10  # 翼龍移動量
-ptera_center_x = ptera_x + img_ptera[0].get_width() / 2  # 翼龍中心x位置
-ptera_center_y = ptera_y + img_ptera[0].get_height() / 2  # 翼龍中心y位置
-ptera_detect_r = max(img_ptera[0].get_width(), img_ptera[0].get_height()) / 2 - 10  # 翼龍偵測半徑
+# ptera_x = bg_x - 100  # 障礙物x位置
+# ptera_y = PTERA_LIMIT_LOW  # 障礙物y位置
+# ptera_index = 0  # 翼龍圖片編號
+# ptera_shift = 10  # 翼龍移動量
+# ptera_center_x = ptera_x + img_ptera[0].get_width() / 2  # 翼龍中心x位置
+# ptera_center_y = ptera_y + img_ptera[0].get_height() / 2  # 翼龍中心y位置
+# ptera_detect_r = max(img_ptera[0].get_width(), img_ptera[0].get_height()) / 2 - 10  # 翼龍偵測半徑
+ptera = Ptera(bg_x - 100, PTERA_LIMIT_LOW, img_ptera, 10)
 ######################循環偵測######################
 while True:
     clock.tick(20)
@@ -315,10 +349,12 @@ while True:
             if event.key == K_RETURN and gg:
                 score = 0
                 gg = False
-                cacti_x = bg_x - 100
-                ptera_x = bg_x - 100
+                # cacti_x = bg_x - 100
+                # ptera_x = bg_x - 100
                 ds_y = LIMIT_LOW
                 jumpState = False
+                cacti.initial()
+                ptera.initial()
         if event.type == KEYUP:
             if event.key==K_DOWN:
                 fast_descend=False
@@ -332,14 +368,18 @@ while True:
         bg_update()
         move_dinosaur()
         score_update()
-        if enemy_random==0:
-            move_cacti()
+        if cacti.x <= 0 or ptera.x <= 0:
+                score += 1
 
-            gg = is_hit(ds_center_x, ds_center_y, cacti_center_x, cacti_center_y, cacti_detect_r + ds_detect_r)
-            pygame.draw.circle(screen, RED, (int(cacti_center_x), int(cacti_center_y)), cacti_detect_r + ds_detect_r, 1)
-        else:
+        # cacti.move()
+        # gg = is_hit(ds_center_x, ds_center_y, cacti.center_x, cacti.center_y, cacti.detect_r + ds_detect_r)
 
-            move_ptera()
-            gg = is_hit(ds_center_x, ds_center_y, ptera_center_x, ptera_center_y, ptera_detect_r + ds_detect_r)
-            pygame.draw.circle(screen, RED, (int(ptera_center_x), int(ptera_center_y)), ptera_detect_r + ds_detect_r, 1)
+        ptera.move()
+        gg = is_hit(ds_center_x, ds_center_y, ptera.center_x, ptera.center_y, ptera.detect_r + ds_detect_r)
+# if enemy_random == 0:
+# move_cacti()
+# gg = is_hit(ds_center_x, ds_center_y, cacti_center_x, cacti_center_y, cacti_detect_r + ds_detect_r)
+# else:
+# move_ptera()
+# gg = is_hit(ds_center_x, ds_center_y, ptera_center_x, ptera_center_y, ptera_detect_r + ds_detect_r)
     pygame.display.update()
