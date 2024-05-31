@@ -225,4 +225,4 @@ while True:
 # else:
 # move_ptera()
 # gg = is_hit(ds_center_x, ds_center_y, ptera_center_x, ptera_center_y, ptera_detect_r + ds_detect_r)
-    pygame.display.update()
+    pygame.display.update()s
