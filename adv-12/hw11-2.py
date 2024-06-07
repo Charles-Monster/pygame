@@ -136,7 +136,7 @@ class Obstacle:
         self.x = bg_x - 100
         self.center_x = self.x + self.img[0].get_width() / 2
         self.center_y = self.y + self.img[0].get_height() / 2
-        self.index = 0
+        self.index = 0 
     def move(self):
         self.x = (self.x - self.shift) % (bg_x - 100)
         self.index = (self.index - 1) % len(self.img)
