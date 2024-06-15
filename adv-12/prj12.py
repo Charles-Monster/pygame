@@ -154,7 +154,7 @@ def create_enemies():
         if gg:
             break
         if enemy.x <= 0:
-            score += 1
+            score += 70
             active_enemies.remove(enemy)
 
 

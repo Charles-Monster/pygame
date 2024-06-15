@@ -66,6 +66,38 @@ def move_starship():
     screen.blit(ss_img, [ss_x - ss_wh, ss_y - ss_hh])
 
 
+def move_burner():
+    """移動燃燒器"""
+    global burn_x, burn_y, burn_img
+    burn_img = img_burn
+    key = pygame.key.get_pressed()
+    if key[pygame.K_LEFT]:
+        burn_x -= 20
+        ss_img = img_sship[1]
+    if key[pygame.K_RIGHT]:
+        burn_x += 20
+        ss_img = img_sship[2]
+    if key[pygame.K_UP]:
+        burn_y -= 20
+    if key[pygame.K_DOWN]:
+        burn_y += 20
+    burn_y = ss_y + burn_img.get_height() / 2 + 40
+    burn_x = ss_x + burn_img.get_width() / 2 - 9
+    burn_hh = burn_img.get_height() / 2
+    burn_wh = burn_img.get_width() / 2
+    if burn_y < burn_hh:
+        burn_y = ss_hh - 20
+    if burn_y > bg_y - burn_hh:
+        burn_y = bg_y - burn_hh
+    if burn_x < burn_wh:
+        burn_x = ss_wh - 20
+    if burn_x > bg_x - burn_wh:
+        burn_x = bg_x - burn_wh
+    if burn_x > bg_x - burn_wh:
+        burn_x = bg_x - burn_wh
+    screen.blit(burn_img, [burn_x - burn_wh, burn_y - burn_hh])
+
+
 ###############################玩家設定###################################
 ss_x = bg_x / 2
 ss_y = bg_y / 2
@@ -74,6 +106,12 @@ ss_hh = img_sship[0].get_height() / 2
 ss_img = img_sship[0]
 burn_shift = 0
 burn_w, burn_h = img_burn.get_rect().size
+mp3_path = "fly high.mp3"
+pygame.mixer.music.load(mp3_path)
+pygame.mixer.music.play()
+pygame.mixer.music.pause()
+pygame.mixer.music.unpause()
+pygame.mixer.music.fadeout(3020000)
 ################################主程式##################################
 while True:
     clock.tick(30)
@@ -87,4 +125,5 @@ while True:
                 screen.pygame.display.set_mode(bg_size)
     roll_bg()
     move_starship()
+    move_burner()
     pygame.display.update()
