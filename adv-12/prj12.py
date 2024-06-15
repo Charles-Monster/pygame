@@ -154,7 +154,7 @@ def create_enemies():
         if gg:
             break
         if enemy.x <= 0:
-            score += 70
+            score += 1
             active_enemies.remove(enemy)
 
 
@@ -228,6 +228,12 @@ active_enemies = []
 enemies_delay = 0  # 敵人出現間隔計數
 enemies_delay_max = 30  # 敵人出現間隔計數最大值
 ######################循環偵測######################
+mp3_path = "game.mp3"
+pygame.mixer.music.load(mp3_path)
+pygame.mixer.music.play()
+pygame.mixer.music.pause()
+pygame.mixer.music.unpause()
+pygame.mixer.music.fadeout(3020000)
 while True:
     clock.tick(FPS)
 
