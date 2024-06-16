@@ -153,6 +153,7 @@ def create_enemies():
         )
         if gg:
             break
+            pygame.mixer.music.pause()
         if enemy.x <= 0:
             score += 1
             active_enemies.remove(enemy)
