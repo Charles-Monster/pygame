@@ -106,7 +106,7 @@ ss_hh = img_sship[0].get_height() / 2
 ss_img = img_sship[0]
 burn_shift = 0
 burn_w, burn_h = img_burn.get_rect().size
-mp3_path = "fly high.mp3"
+mp3_path = "game"
 pygame.mixer.music.load(mp3_path)
 pygame.mixer.music.play()
 pygame.mixer.music.pause()
