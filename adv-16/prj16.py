@@ -2,6 +2,7 @@
 import pygame
 import sys
 import os
+from typing import List
 from pygame.locals import *
 import random
 
@@ -104,7 +105,8 @@ def move_starship():
 
 
 def create_enemy():
-    emy_img = img_enemy
+    global emy_show
+    emy_img = random.choice(emy_show)
     emy_wh = emy_img.get_width() // 2
     emy_x = random.randint(emy_wh, bg_x - emy_wh)
     emy_y = random.randint(-bg_y, -emy_wh)
@@ -134,6 +136,7 @@ img_sship = [
 img_burn = pygame.image.load("image/starship_burner.png")
 img_weapon = pygame.image.load("image/bullet.png")
 img_enemy = pygame.image.load("image/enemy1.png")
+img_enemy2 = pygame.image.load("image/enemy2.png")
 ######################遊戲視窗設定######################
 bg_x = img_bg.get_width()  # 背景圖片寬度
 bg_y = img_bg.get_height()  # 背景圖片高度
@@ -158,8 +161,12 @@ missiles = [Missile(0, 0, img_weapon, msl_shift) for _ in range(MISSLE_MAX)]
 msl_cooldown = 0
 msl_cooldown_max = 1
 ######################敵機設定######################
+emy_show = [img_enemy, img_enemy2]
 emy_shift = 5
-enemy = Enemy(*create_enemy(), emy_shift)
+emy_list: List[Enemy] = []
+emy_num = 5
+for i in range(emy_num):
+    emy_list.append(Enemy(*create_enemy(), emy_shift))
 ######################主程式######################
 while True:
     clock.tick(30)
@@ -184,8 +191,9 @@ while True:
     for missile in missiles:
         missile.move()
         missile.draw(screen)
-    enemy.move()  # 移動敵機
-    enemy.draw(screen)  # 繪製敵機
-    if not enemy.active:  # 檢查敵機是否活躍
-        enemy.reset(*create_enemy(), emy_shift)  # 重置敵機
+    for enemy in emy_list:
+        enemy.move()
+        enemy.draw(screen)
+        if not enemy.active:  # 檢查敵機是否活躍
+            enemy.reset(*create_enemy(), emy_shift)  # 重置敵機
     pygame.display.update()
