@@ -278,6 +278,7 @@ while True:
 
     if gg:
         game_over()
+        pygame.mixer.music.pause()
     else:
         bg_update()
         move_dinosaur()
